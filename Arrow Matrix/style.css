@@ -1,0 +1,30 @@
+html, body {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  background-image: url("assets/background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#mainCanvas {
+  mix-blend-mode: multiply;
+}
+#drawCanvas {
+  position: absolute;
+  z-index:1;
+  width: 200px;
+  height:200px;
+  top: 10px;
+  left:10px;
+}
+
+button {
+  background: white;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  width: 200px;
+  height:50px;
+  z-index:2;
+}
