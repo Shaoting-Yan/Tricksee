@@ -35,6 +35,7 @@ var mainSketch = function(p){
       }
     }
   }
+  
   p.draw = function(){
     let rotation = getEulerAngles(getRotationMatrix(p.rotationZ,p.rotationX,p.rotationY));
     p.Rz = rotation[0];
