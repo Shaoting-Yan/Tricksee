@@ -19,7 +19,6 @@ var mainSketch = function(p){
     p.matrixSize = p.int(p.viewSize/p.offset);
     //some buffer
     p.fixedBoard = p.createGraphics(p.viewSize,p.viewSize);
-    p.moveBoard = p.createGraphics(p.viewSize,p.viewSize);
     //Arrow instances
     p.blueArrow = new Arrow(p.arrowSize,p.arrowWeight,p.color('#2677BB'));
     p.greenArrow = new Arrow(p.arrowSize,p.arrowWeight,p.color('#457C39'));
@@ -42,22 +41,21 @@ var mainSketch = function(p){
     p.Ry = rotation[2];
     p.Rx = rotation[1];  
     p.clear();
-    p.moveBoard.clear();
+    moveObject(p);
     for(let i = 0;i < p.matrixSize; i++){
       for(let j = 0;j < p.matrixSize; j++){
         if(p.flagged[i][j]){
-          p.moveBoard.push();
-          p.moveBoard.translate(i*p.offset,j*p.offset);
-          p.moveBoard.rotate(p.Rz-p.currRz-Math.PI/4);
-          p.greenArrow.display(p.moveBoard);
-          p.moveBoard.pop();
+          p.push();
+          p.translate(-p.viewSize/2+i*p.offset,-p.viewSize/2+j*p.offset);
+          p.rotate(p.Rz-p.currRz-Math.PI/4);
+          p.greenArrow.display(p);
+          p.pop();
         }
       }
     }
-    moveObject(p);
     p.imageMode(p.CENTER);
     p.image(p.fixedBoard,0,0,p.fixedBoard.width,p.fixedBoard.height);
-    p.image(p.moveBoard,0,0,p.moveBoard.width,p.moveBoard.height);
+    // p.image(p.moveBoard,0,0,p.moveBoard.width,p.moveBoard.height);
     moveCamera(p);
   }
 } 
