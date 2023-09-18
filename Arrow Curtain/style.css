@@ -1,0 +1,28 @@
+html, body {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  background-image: url("assets/background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#backCanvas {
+  position: absolute;
+  z-index:0;
+  mix-blend-mode: multiply;
+}
+#foreCanvas {
+  position: absolute;
+  z-index:1;
+}
+
+button {
+  background: white;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  width: 200px;
+  height:50px;
+  z-index:2;
+}
