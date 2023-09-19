@@ -1,5 +1,6 @@
 class ArrowCurve{
-  constructor(_start,_tangent,_curvature,_length,_thickness,_color){
+  constructor(_prev,_start,_tangent,_curvature,_length,_thickness,_color){
+    this.prev = new p5.Vector(0,_prev);
     this.start = new p5.Vector(0,_start);
     this.tangent = new p5.Vector(0,_tangent);
     this.curvature = new p5.Vector(0,_curvature);
@@ -19,6 +20,8 @@ class ArrowCurve{
     p.stroke(this.color);
     p.strokeWeight(this.thickness);
     p.strokeCap(p.SQUARE);
+    p.translate(-this.prev.x,-this.prev.y);
+    p.line(this.prev.x,this.prev.y,this.start.x,this.start.y);
     p.beginShape();
       p.vertex(arrowPoint.x,arrowPoint.y);
       p.bezierVertex(this.curvature.x,this.curvature.y,this.tangent.x,this.tangent.y,
