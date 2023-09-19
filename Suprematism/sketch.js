@@ -65,7 +65,7 @@ var backSketch = function(p){
     p.rectMode(p.CENTER);
     for (let i = -p.scrollSize;i < p.scrollSize; i++){
       p.push();
-      p.fill('#2677BB');
+      p.fill('#E4BD0B');
       p.noStroke();
       p.translate(i*offset,0);
       p.rect(0,0,w,h);

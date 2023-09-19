@@ -10,10 +10,8 @@ html, body {
 #backCanvas {
   position: absolute;
   z-index:0;
-  mix-blend-mode: multiply;
-  filter: blur(4px);
+  /* mix-blend-mode: multiply; */
 }
-
 #foreCanvas {
   position: absolute;
   z-index:1;

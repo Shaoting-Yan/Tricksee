@@ -18,7 +18,7 @@ var mainSketch = function(p){
     p.viewSize = p.camHeight*Math.PI*2;
     p.matrixSize = p.int(p.viewSize/p.offset);
     //some buffer
-    p.fixedBoard = p.createGraphics(p.viewSize,p.viewSize);
+    fixedBoard = p.createGraphics(p.viewSize,p.viewSize);
     //Arrow instances
     p.blueArrow = new Arrow(p.arrowSize,p.arrowWeight,p.color('#2677BB'));
     p.greenArrow = new Arrow(p.arrowSize,p.arrowWeight,p.color('#457C39'));
@@ -26,13 +26,18 @@ var mainSketch = function(p){
     for(let i = 0;i < p.matrixSize; i++){
       for(let j = 0;j < p.matrixSize; j++){
         if(!p.flagged[i][j]){
-          p.fixedBoard.push();
-          p.fixedBoard.translate(i*p.offset,j*p.offset);
-          p.blueArrow.display(p.fixedBoard);
-          p.fixedBoard.pop();
+          fixedBoard.push();
+          fixedBoard.translate(i*p.offset,j*p.offset);
+          p.blueArrow.display(fixedBoard);
+          fixedBoard.pop();
         }
       }
     }
+    fixedBoardBuffer = p.createFramebuffer();
+    fixedBoardBuffer.resize(p.viewSize,p.viewSize);
+    fixedBoardBuffer.draw(()=>{p.clear();p.imageMode(p.CENTER);
+                            p.image(fixedBoard,0,0,fixedBoardBuffer.width,fixedBoardBuffer.width)});
+    fixedBoard.remove();
   }
   
   p.draw = function(){
@@ -54,7 +59,7 @@ var mainSketch = function(p){
       }
     }
     p.imageMode(p.CENTER);
-    p.image(p.fixedBoard,0,0,p.fixedBoard.width,p.fixedBoard.height);
+    p.image(fixedBoardBuffer,0,0,fixedBoardBuffer.width,fixedBoardBuffer.height);
     // p.image(p.moveBoard,0,0,p.moveBoard.width,p.moveBoard.height);
     moveCamera(p);
   }

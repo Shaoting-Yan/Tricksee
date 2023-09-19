@@ -5,7 +5,7 @@ var backSketch = function(p){
   p.sw = 3;
   p.su = 2;
   p.da = 15;
-  thickness = 50;
+  thickness = 80;
   offset = thickness*2.25;
   p.setup = function(){
     p.pixelDensity(1);
@@ -57,7 +57,7 @@ function drawWire(p,thickness){
     p.noFill();
     p.stroke('#2677BB');
     p.strokeWeight(thickness);
-    p.strokeCap(p.SQUARE);
+    // p.strokeCap(p.SQUARE);
     p.beginShape();
       p.vertex(p.cos(p.Rz)*p.radius,p.midPoint.y+p.sin(p.Rz)*p.radius);
       p.quadraticVertex(p.controlPoint.x,p.controlPoint.y,p.midPoint.x,p.midPoint.y);

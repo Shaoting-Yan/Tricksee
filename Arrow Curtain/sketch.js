@@ -5,7 +5,7 @@ var backSketch = function(p){
   p.sw = 3;
   p.su = 2;
   p.da = 1;
-  thickness = 35;
+  thickness = 42.5;
   p.preload = function(){
     p.blurShader = p.loadShader('shaders/effect.vert', 'shaders/effect.frag');
   }
@@ -29,7 +29,7 @@ var backSketch = function(p){
     layer1.arrows = [];
     layer1.tagged = random1D(layer1.size,layer1.size/2,layer1.space);
     for(let i = 0;i<layer1.tagged.length;i++){
-      let length = p.randomGaussian(layer1.height*0.75, layer1.height*0.25);
+      let length = p.random(layer1.height*0.5,layer1.height);
       if(layer1.tagged[i]){
         layer1.arrows.push(new ArrowCurve(0,length*(2/5),length*(3/5),length,thickness,"black"));
       }else{
@@ -50,7 +50,7 @@ var backSketch = function(p){
     layer2.arrows = [];
     layer2.tagged = random1D(layer2.size,layer2.size/2,layer2.space);
     for(let i = 0;i<layer2.tagged.length;i++){
-      let length = p.randomGaussian(layer2.height*0.75, layer2.height*0.25);
+      let length = p.random(layer2.height*0.5,layer2.height);
       if(layer2.tagged[i]){
         layer2.arrows.push(new ArrowCurve(0,length*(2/5),length*(3/5),length,thickness,"#DE3D83"));
       }else{
@@ -70,7 +70,7 @@ var backSketch = function(p){
     layer3.arrows = [];
     layer3.tagged = random1D(layer3.size,layer3.size/2,layer3.space);
     for(let i = 0;i<layer3.tagged.length;i++){
-      let length = p.randomGaussian(layer3.height*0.75, layer3.height*0.25);
+      let length = p.random(layer3.height*0.5,layer3.height);
       if(layer3.tagged[i]){
         layer3.arrows.push(new ArrowCurve(0,length*(2/5),length*(3/5),length,thickness,"black"));
       }else{

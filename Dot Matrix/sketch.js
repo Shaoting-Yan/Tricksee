@@ -23,7 +23,7 @@ var backSketch = function(p){
     layer1Pass2 = p.createFramebuffer({ depth: false });
     layer1Pass2.resize(layer1.width,layer1.height);
     layer1.blurRadius = 0.1;//can not set this to zero
-    layer1.offset = 160;
+    layer1.offset = p.width/2;
     layer1.size = p.int(layer1.width/layer1.offset);
     layer1.begin();
       p.clear();
@@ -34,7 +34,7 @@ var backSketch = function(p){
           p.noStroke();
           p.fill('#DE3D83');
           p.translate(i*layer1.offset,j*layer1.offset);
-          p.circle(0,0,80);
+          p.circle(0,0,p.width/3.5);
           p.pop();
         }
       }
@@ -47,8 +47,8 @@ var backSketch = function(p){
     layer2Pass1.resize(layer2.width,layer2.height);
     layer2Pass2 = p.createFramebuffer({ depth: false });
     layer2Pass2.resize(layer2.width,layer2.height);
-    layer2.blurRadius = 1.5;//can not set this to zero
-    layer2.offset = 80;
+    layer2.blurRadius = 1.25;//can not set this to zero
+    layer2.offset = p.width/4;
     layer2.size = p.int(layer2.width/layer2.offset);
     layer2.begin();
       p.clear();
@@ -59,7 +59,7 @@ var backSketch = function(p){
           p.noStroke();
           p.fill('#2677BB');
           p.translate(i*layer2.offset,j*layer2.offset);
-          p.circle(0,0,35);
+          p.circle(0,0,p.width/10);
           p.pop();
         }
       }
@@ -72,8 +72,8 @@ var backSketch = function(p){
     layer3Pass1.resize(layer3.width,layer3.height);
     layer3Pass2 = p.createFramebuffer({ depth: false });
     layer3Pass2.resize(layer3.width,layer3.height);
-    layer3.blurRadius = 1.5;//can not set this to zero
-    layer3.offset = 80;
+    layer3.blurRadius = 1.25;//can not set this to zero
+    layer3.offset = p.width/4;
     layer3.size = p.int(layer3.width/layer3.offset);
     layer3.begin();
       p.clear();
@@ -84,11 +84,14 @@ var backSketch = function(p){
           p.noStroke();
           p.fill('#00B8B8');
           p.translate(i*layer3.offset,j*layer3.offset);
-          p.circle(0,0,25);
+          p.circle(0,0,p.width/12);
           p.pop();
         }
       }
     layer3.end();
+    p.gaussianBlur(layer1,layer1Pass1,layer1Pass2,layer1.blurRadius);
+    p.gaussianBlur(layer2,layer2Pass1,layer2Pass2,layer2.blurRadius);
+    p.gaussianBlur(layer3,layer3Pass1,layer3Pass2,layer3.blurRadius);
   }
   p.draw = function(){
     let rotation = getEulerAngles(getRotationMatrix(p.rotationZ,p.rotationX,p.rotationY));
@@ -98,18 +101,14 @@ var backSketch = function(p){
     p.clear();
     p.background(255);
     moveCamera(p);
-    turnV1 = p.createVector(Math.cos(p.noise(p.frameCount/100)*2*Math.PI),
-                            Math.sin(p.noise(p.frameCount/100)*2*Math.PI)).setMag(35);//turning
-    turnV2 = p.createVector(Math.cos(p.noise(p.frameCount/100+0.2)*2*Math.PI),
-                            Math.sin(p.noise(p.frameCount/100+0.2)*2*Math.PI)).setMag(50);//turning
-    accV1 = p.createVector(p.accX,p.accY).div(2);//accX, accY are from moveCamera function
+    turnV1 = p.createVector(Math.cos(p.noise(p.frameCount/500)*2*Math.PI),
+                            Math.sin(p.noise(p.frameCount/500)*2*Math.PI)).setMag(p.width/8);//turning
+    turnV2 = p.createVector(Math.cos(p.noise(p.frameCount/500+0.2)*2*Math.PI),
+                            Math.sin(p.noise(p.frameCount/500+0.2)*2*Math.PI)).setMag(p.width/6);//turning
+    accV1 = p.createVector(p.accX,p.accY).setMag(0);//accX, accY are from moveCamera function
     accV2 = p.createVector(p.accX,p.accY);
 
     moveObject(p);
-
-    p.gaussianBlur(layer1,layer1Pass1,layer1Pass2,layer1.blurRadius);
-    p.gaussianBlur(layer2,layer2Pass1,layer2Pass2,layer2.blurRadius);
-    p.gaussianBlur(layer3,layer3Pass1,layer3Pass2,layer3.blurRadius);
 
     p.resetShader();
     p.push();
@@ -122,7 +121,6 @@ var backSketch = function(p){
     p.image(layer2Pass2,sumV2.x,sumV2.y,layer2Pass2.width*2,layer2Pass2.height*2);
     p.translate(0,0,1);
     p.image(layer1Pass2,0,0);
-    // p.image(layer3Pass2,0,0);
     p.pop();
   }
 
