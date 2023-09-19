@@ -6,9 +6,9 @@ var mainSketch = function(p){
   p.su = 2;
   p.da = 15;
   //Arrow sizing
-  p.arrowSize = 50;
-  p.arrowWeight = 15;
-  p.gap = 50;
+  p.arrowSize = 70;
+  p.arrowWeight = 21;
+  p.gap = 70;
   p.offset = p.arrowSize + p.gap;
   p.setup = function(){
     p.pixelDensity(1);
