@@ -1,155 +1,91 @@
 getMotion();
-var backSketch = function(p){
+_setup = function(){
+  this.pixelDensity(1);
+  this.createCanvas(this.windowWidth,this.windowHeight,this.WEBGL); 
+  //view variables
+  this.camHeight = this.height/2/this.tan(this.PI/6);
+  this.viewSize = this.camHeight*Math.PI*2;
   //motion parameter
-  p.he = 3;
-  p.sw = 3;
-  p.su = 2;
-  p.da = 10;
-  p.preload = function(){
-    p.blurShader = p.loadShader('shaders/effect.vert', 'shaders/effect.frag');
-  }
-  p.setup = function(){
-    p.pixelDensity(1);
-    p.createCanvas(p.windowWidth,p.windowHeight,p.WEBGL); 
-    //view variables
-    p.camHeight = p.height/2/p.tan(p.PI/6);
-    p.viewSize = p.camHeight*Math.PI*2;
+  this.he = 3;
+  this.sw = 3;
+  this.su = 2;
+  this.da = 10;
+  //grid sizing
+  this.offset = this.width/this.gridRatio;
+  this.size = this.int(this.viewSize/this.offset);
+}
 
-    //layer 1, the frontmost layer
-    layer1 = p.createFramebuffer({ depth: false });//for some weird reason has to disable depth
-    layer1.resize(p.viewSize,p.viewSize);
-    layer1Pass1 = p.createFramebuffer({ depth: false });
-    layer1Pass1.resize(layer1.width,layer1.height);
-    layer1Pass2 = p.createFramebuffer({ depth: false });
-    layer1Pass2.resize(layer1.width,layer1.height);
-    layer1.blurRadius = 0.1;//can not set this to zero
-    layer1.offset = p.width/2;
-    layer1.size = p.int(layer1.width/layer1.offset);
-    layer1.begin();
-      p.clear();
-      p.translate(-layer1.width/2,-layer1.height/2);
-      for(let i = 0;i<layer1.size;i++){
-        for(let j = 0;j<layer1.size;j++){
-          p.push();
-          p.noStroke();
-          p.fill('#DE3D83');
-          p.translate(i*layer1.offset,j*layer1.offset);
-          p.circle(0,0,p.width/3.5);
-          p.pop();
-        }
-      }
-    layer1.end();
-    
-    //layer 2
-    layer2 = p.createFramebuffer({ depth: false });//for some weird reason has to disable depth
-    layer2.resize(p.viewSize/2,p.viewSize/2);//resize to reducce buffer usage
-    layer2Pass1 = p.createFramebuffer({ depth: false });
-    layer2Pass1.resize(layer2.width,layer2.height);
-    layer2Pass2 = p.createFramebuffer({ depth: false });
-    layer2Pass2.resize(layer2.width,layer2.height);
-    layer2.blurRadius = 1.25;//can not set this to zero
-    layer2.offset = p.width/4;
-    layer2.size = p.int(layer2.width/layer2.offset);
-    layer2.begin();
-      p.clear();
-      p.translate(-layer2.width/2,-layer2.height/2);
-      for(let i = 0;i<layer2.size;i++){
-        for(let j = 0;j<layer2.size;j++){
-          p.push();
-          p.noStroke();
-          p.fill('#2677BB');
-          p.translate(i*layer2.offset,j*layer2.offset);
-          p.circle(0,0,p.width/10);
-          p.pop();
-        }
-      }
-    layer2.end();
-
-    //layer 3
-    layer3 = p.createFramebuffer({ depth: false });//for some weird reason has to disable depth
-    layer3.resize(p.viewSize/2,p.viewSize/2);//resize to reducce buffer usage
-    layer3Pass1 = p.createFramebuffer({ depth: false });
-    layer3Pass1.resize(layer3.width,layer3.height);
-    layer3Pass2 = p.createFramebuffer({ depth: false });
-    layer3Pass2.resize(layer3.width,layer3.height);
-    layer3.blurRadius = 1.25;//can not set this to zero
-    layer3.offset = p.width/4;
-    layer3.size = p.int(layer3.width/layer3.offset);
-    layer3.begin();
-      p.clear();
-      p.translate(-layer3.width/2,-layer3.height/2);
-      for(let i = 0;i<layer3.size;i++){
-        for(let j = 0;j<layer3.size;j++){
-          p.push();
-          p.noStroke();
-          p.fill('#00B8B8');
-          p.translate(i*layer3.offset,j*layer3.offset);
-          p.circle(0,0,p.width/12);
-          p.pop();
-        }
-      }
-    layer3.end();
-    p.gaussianBlur(layer1,layer1Pass1,layer1Pass2,layer1.blurRadius);
-    p.gaussianBlur(layer2,layer2Pass1,layer2Pass2,layer2.blurRadius);
-    p.gaussianBlur(layer3,layer3Pass1,layer3Pass2,layer3.blurRadius);
-  }
-  p.draw = function(){
-    let rotation = getEulerAngles(getRotationMatrix(p.rotationZ,p.rotationX,p.rotationY));
-    p.Rz = rotation[0];
-    p.Ry = rotation[2];
-    p.Rx = rotation[1];  
-    p.clear();
-    p.background(255);
-    moveCamera(p);
-    turnV1 = p.createVector(Math.cos(p.noise(p.frameCount/500)*2*Math.PI),
-                            Math.sin(p.noise(p.frameCount/500)*2*Math.PI)).setMag(p.width/8);//turning
-    turnV2 = p.createVector(Math.cos(p.noise(p.frameCount/500+0.2)*2*Math.PI),
-                            Math.sin(p.noise(p.frameCount/500+0.2)*2*Math.PI)).setMag(p.width/6);//turning
-    accV1 = p.createVector(p.accX,p.accY).setMag(0);//accX, accY are from moveCamera function
-    accV2 = p.createVector(p.accX,p.accY);
-
-    moveObject(p);
-
-    p.resetShader();
-    p.push();
-    p.imageMode(p.CENTER);
-    p.blendMode(p.MULTIPLY);
-    sumV1 = p5.Vector.add(accV1, turnV1);
-    p.image(layer3Pass2,sumV1.x,sumV1.y,layer3Pass2.width*2,layer3Pass2.height*2);
-    p.translate(0,0,1);
-    sumV2 = p5.Vector.add(accV2, turnV2);
-    p.image(layer2Pass2,sumV2.x,sumV2.y,layer2Pass2.width*2,layer2Pass2.height*2);
-    p.translate(0,0,1);
-    p.image(layer1Pass2,0,0);
-    p.pop();
-  }
-
-  p.gaussianBlur = function (source,pbo1,pbo2,radius){
-    //iterate to get larger blur
-    for(let i = 0;i<radius;i++){
-      let spread = radius-i;
-      //two pass gaussian blur
-      pbo1.begin();
-        p.clear();
-        p.noStroke();
-        p.shader(p.blurShader);
-        p.blurShader.setUniform('tex0', i==0?source:pbo2);
-        p.blurShader.setUniform('direction', [0,spread]);
-        p.blurShader.setUniform('iResolution', [pbo2.width,pbo2.height]);
-        p.rect(0,0,pbo1.width,pbo1.height);
-      pbo1.end();
-      pbo2.begin();
-        p.clear();
-        p.noStroke();
-        p.shader(p.blurShader);
-        p.blurShader.setUniform('tex0', pbo1);
-        p.blurShader.setUniform('direction', [spread,0]);
-        p.blurShader.setUniform('iResolution', [pbo1.width,pbo1.height]);
-        p.rect(0,0,pbo2.width,pbo2.height);
-      pbo2.end();
+_draw = function(){
+  let rotation = getEulerAngles(getRotationMatrix(this.rotationZ,this.rotationX,this.rotationY));
+  this.Rz = rotation[0];
+  this.Ry = rotation[2];
+  this.Rx = rotation[1];  
+  this.clear();
+  // this.ortho();
+  this.moveCamera();
+  this.turnV = this.createVector(Math.cos(this.noise(this.frameCount/500)*2*Math.PI),
+                          Math.sin(this.noise(this.frameCount/500)*2*Math.PI)).setMag(this.turnMag);//turning
+  this.accV = this.createVector(this.accX,this.accY).mult(this.accMag);
+  this.moveObject();
+  this.push();
+  // this.imageMode(this.CENTER);
+  this.sumV = p5.Vector.add(this.accV, this.turnV);
+  this.translate(-this.viewSize/2,-this.viewSize/2,this.zHeight);
+  for(let i = 0;i<this.size;i++){
+    for(let j = 0;j<this.size;j++){
+      this.push();
+      this.noStroke();
+      this.fill(this.col);
+      this.translate(i*this.offset+this.sumV.x,j*this.offset+this.sumV.y);
+      this.circle(0,0,this.offset/this.elementRatio);
+      this.pop();
     }
   }
+  this.pop();
+}
+
+var layer1Sketch = function(p){
+  //motion parameter 
+  p.turnMag = 0;
+  p.accMag = 0; 
+  p.zHeight = 0;
+  p.col = '#DE3D83';
+  p.gridRatio = 2;
+  p.elementRatio = 1.75;
+  p.setup = _setup.bind(p);
+  p.draw = _draw.bind(p);
+  p.moveCamera = moveCamera.bind(p);
+  p.moveObject = moveObject.bind(p);
 } 
 
-let backCanvas = new p5(backSketch,'backCanvas');
-// let foreCanvas = new p5(foreSketch,'drawCanvas');
+var layer2Sketch = function(p){
+  //motion parameter 
+  p.turnMag = 0;
+  p.accMag = 1.5; 
+  p.col = '#2677BB';
+  p.zHeight = -150;
+  p.gridRatio = 2;
+  p.elementRatio = 2;
+  p.setup = _setup.bind(p);
+  p.draw = _draw.bind(p);
+  p.moveCamera = moveCamera.bind(p);
+  p.moveObject = moveObject.bind(p);
+} 
+
+var layer3Sketch = function(p){
+  //motion parameter 
+  p.turnMag = 0;
+  p.accMag = 1; 
+  p.col = '#00B8B8';
+  p.zHeight = -300;
+  p.gridRatio = 2;
+  p.elementRatio = 2.25;
+  p.setup = _setup.bind(p);
+  p.draw = _draw.bind(p);
+  p.moveCamera = moveCamera.bind(p);
+  p.moveObject = moveObject.bind(p);
+} 
+
+let layer1Canvas = new p5(layer1Sketch,'layer1Canvas');
+let layer2Canvas = new p5(layer2Sketch,'layer2Canvas');
+let layer3Canvas = new p5(layer3Sketch,'layer3Canvas');

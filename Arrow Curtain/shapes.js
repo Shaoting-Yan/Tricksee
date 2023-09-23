@@ -12,13 +12,13 @@ class ArrowCurve{
     this.arrowBody1 = new p5.Vector.fromAngle(Math.PI*0.75,this.arrowSize);
     this.arrowBody2 = new p5.Vector.fromAngle(Math.PI*1.25,this.arrowSize);
   }
-  display(p,Rz){
+  display(p,Rz,f){
     this.offset.setHeading(Rz);
     let arrowPoint = p5.Vector.add(this.mid,this.offset);
     p.push();
     p.noFill();
     p.stroke(this.color);
-    p.strokeWeight(this.thickness);
+    p.strokeWeight(this.thickness*f);
     p.strokeCap(p.SQUARE);
     p.translate(-this.prev.x,-this.prev.y);
     p.line(this.prev.x,this.prev.y,this.start.x,this.start.y);

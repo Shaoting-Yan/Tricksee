@@ -43,60 +43,60 @@ function getEulerAngles( matrix ) {
     return [x, y, z];
 }
 
-function moveObject(p){
-    let currX = p.camHeight*p.Ry;   //for left right rotation
-    p.rotateZ(Math.PI/2-p.Rz);        //tilting
-    p.translate(currX,0,0);     
+function moveObject(){
+    let currX = this.camHeight*this.Ry;   //for left right rotation
+    this.rotateZ(Math.PI/2-this.Rz);        //tilting
+    this.translate(currX,0,0);     
     //for arrow turning
-    p.currRz = typeof p.currRz == 'undefined' ? p.Rz : p.currRz;
-    if (p.currRz != p.Rz){
-      p.currRz += (p.Rz-p.currRz)/15; //Ease back
+    this.currRz = typeof this.currRz == 'undefined' ? this.Rz : this.currRz;
+    if (this.currRz != this.Rz){
+      this.currRz += (this.Rz-this.currRz)/15; //Ease back
     }
 }
   
-function moveCamera(p){
-    let Ax = p.accelerationX;
-    let Ay = p.accelerationY;
-    let Az = p.accelerationZ;
+function moveCamera(){
+    let Ax = this.accelerationX;
+    let Ay = this.accelerationY;
+    let Az = this.accelerationZ;
     
     //camera move due to acceleration and brake
-    let dz = p.su*Math.sign(Az)*(Math.abs(Az)**1.5);
-    p.accZ = typeof p.accZ == 'undefined' ? p.camHeight : p.constrain(p.accZ+dz,-p.camHeight/2,p.camHeight*5);
-    if (p.accZ != 0){                                        
-      p.accZ -= p.accZ/(Math.abs(p.accZ)**0.5); //damping
+    let dz = this.su*Math.sign(Az)*(Math.abs(Az)**1.5);
+    this.accZ = typeof this.accZ == 'undefined' ? this.camHeight : this.constrain(this.accZ+dz,-this.camHeight/2,this.camHeight*5);
+    if (this.accZ != 0){                                        
+      this.accZ -= this.accZ/(Math.abs(this.accZ)**0.5); //damping
     }
-    let camZ = p.camHeight + p.accZ;
+    let camZ = this.camHeight + this.accZ;
 
     //camera move due to up and down
-    let dy = p.he*Math.sign(Ay)*(Math.abs(Ay)**1.5);
-    p.accY = p.accY == null ? 0 : p.accY+dy;
-    if (p.accY != 0){                                        
-      p.accY -= p.accY/20; //damping
+    let dy = this.he*Math.sign(Ay)*(Math.abs(Ay)**1.5);
+    this.accY = this.accY == null ? 0 : this.accY+dy;
+    if (this.accY != 0){                                        
+      this.accY -= this.accY/20; //damping
     }
-    let camY = p.accY;
-    let obY = p.accY;
+    let camY = this.accY;
+    let obY = this.accY;
 
     //camera move due to left and right
-    let dx = p.sw*Math.sign(Ax)*(Math.abs(Ax)**1.5);
-    p.accX = typeof p.accX == 'undefined' ? 0 : p.accX+dx;
-    if (p.accX != 0){                                        
-      p.accX -= p.accX/10; //damping
+    let dx = this.sw*Math.sign(Ax)*(Math.abs(Ax)**1.5);
+    this.accX = typeof this.accX == 'undefined' ? 0 : this.accX+dx;
+    if (this.accX != 0){                                        
+      this.accX -= this.accX/10; //damping
     }
-    let camX = p.accX;
-    let obX = p.accX;
+    let camX = this.accX;
+    let obX = this.accX;
 
     //pitch movement
-    p.currRx = typeof p.currRx == 'undefined' ? p.Rx : p.currRx;
-    if (p.currRx != p.Rx){
-      p.currRx += (p.Rx-p.currRx)/p.da; //Ease back
+    this.currRx = typeof this.currRx == 'undefined' ? this.Rx : this.currRx;
+    if (this.currRx != this.Rx){
+      this.currRx += (this.Rx-this.currRx)/this.da; //Ease back
     }
-    obY += -camZ*Math.tan(p.Rx-p.currRx);
-    if (p.currRx != p.Rx){
-      p.currRx += (p.Rx-p.currRx)/p.da; //Ease back
+    obY += -camZ*Math.tan(this.Rx-this.currRx);
+    if (this.currRx != this.Rx){
+      this.currRx += (this.Rx-this.currRx)/this.da; //Ease back
     }
-    camY -= -camZ*Math.tan(p.Rx-p.currRx);
+    camY -= -camZ*Math.tan(this.Rx-this.currRx);
 
-    p.camera(camX, camY, camZ, obX, obY, 0,0,1,0);
+    this.camera(camX, camY, camZ, obX, obY, 0,0,1,0);
     // perspective(PI / 3.0, width / height, camZ-140, camZ);
 }
 

@@ -1,0 +1,266 @@
+*{
+  box-sizing:border-box;
+  text-decoration: none;
+}
+
+h2 {
+  text-align:center;
+  color: #000;
+  font-family: Helvetica;
+  font-size: 20px;
+  font-weight: normal;
+  letter-spacing: 0.2px;
+}
+
+.u-bold{
+  font-weight: bold;
+}
+
+html, body {
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  background: white;
+  position: absolute;
+  top: auto;
+  bottom: auto;
+  left: auto;
+  right: auto;
+  width: 200px;
+  height:50px;
+  z-index:100;
+}
+
+.container {
+  display: flex;
+  flex-direction:column;
+  width:100vw;
+  height:100vh;
+  touch-action: none;
+  user-select: none;
+  justify-content:center;
+}
+
+.UI{
+  z-index: 10;
+  background-image: url("assets/UI.jpg");
+}
+
+.top {
+  border-bottom: 2px solid black;
+  height:40px;
+  width:100%;
+  position: absolute;
+  top: 0px;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.bottom {
+  border-top: 2px solid black;
+  height:48px;
+  width:100%;
+  position: absolute;
+  bottom: 0px;
+  display:flex;
+  flex-direction:row;
+}
+
+#visuals{
+  width:100%;
+  height:100%;
+  padding-top:40px;
+  padding-bottom:72px;
+}
+
+#arrow-curtain{
+  background-image: url("assets/arrow curtain.png");
+  background-size: cover;
+}
+
+#dot-matrix{
+  background-image: url("assets/dot matrix.png");
+  background-size: cover;
+}
+
+#arrow-matrix{
+  background-image: url("assets/arrow matrix.png");
+  background-size: cover;
+}
+
+#strokes{
+  background-image: url("assets/strokes.png");
+  background-size: cover;
+}
+
+#menu{
+  position:absolute;
+  right:0px;
+  width: 76px;
+  height:100%;
+  border-left: 2px solid black;
+  display:flex;
+  justify-content:center;
+}
+
+.icon{
+  margin:auto;
+}
+
+#arrow{
+  transform: rotate(180deg);
+}
+
+.tab{
+  width:100%;
+  height:100%;
+  margin:0px;
+  display:flex;
+  flex-direction:column;
+  justify-content: center;
+  z-index: 11;
+}
+
+#prevent{
+  border-left:1.5px solid black;
+}
+#relief{
+  border-right:1.5px solid black;
+}
+
+.bottom-sheet-container{
+  width:100%;
+  height: 332px;
+  position:absolute;
+  bottom:-130px;
+  padding-top:0px;
+  z-index:10;
+}
+
+.bottom-sheet{
+  border-top: 2px solid black;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  height:154px;
+}
+
+#handle{
+  height:24px;
+  display:flex;
+  flex-direction:row;
+  justify-content:center;
+  flex:none;
+}
+
+#carousel{
+  border-top:2px solid black;
+  height: 130px;
+  flex:none;
+}
+#carousel .swiper-slide{
+  border-left:2px solid black;
+  overflow: hidden;
+}
+
+img{
+  width: 100px;
+  object-fit: contain;
+  opacity:50%;
+}
+
+#breath{
+  position:absolute;
+  z-index: 8;
+  bottom:72px;
+  width:100%;
+  height:52px;
+  border-top: 2px solid #FFF;
+  background: rgba(255, 255, 255, 0.25);
+  -webkit-backdrop-filter: blur(12.5px);
+  backdrop-filter: blur(12.5px);
+}
+
+.banner-container{
+  height: 52px;
+  width:100%;
+  position:absolute;
+  bottom: 0px;
+  overflow: hidden;
+}
+
+.banner {
+  color: gray;
+  width:100%;
+  /* animation properties */
+  -moz-transform: translateX(100%);
+  -webkit-transform: translateX(100%);
+  transform: translateX(100%);
+  -moz-animation: my-animation 5s linear infinite;
+  -webkit-animation: my-animation 5s linear infinite;
+}
+
+#CTA {
+  width:80px;
+  height:80px;
+  z-index:10;
+  position:absolute;
+  bottom:90px;
+  border-radius: 50%;
+  border:2px solid black;
+  display:flex;
+  justify-content: center;
+  background:white;
+  left: 0; 
+  right: 0; 
+  margin-left: auto; 
+  margin-right: auto; 
+}
+
+.start{
+  animation: breath-animation 10s ease-in-out infinite;
+}
+
+/* animation zone */
+@-webkit-keyframes my-animation {
+  from { -webkit-transform: translateX(100%); }
+  to { -webkit-transform: translateX(0%); }
+}
+
+@keyframes my-animation {
+  from {
+    -moz-transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+  }
+  to {
+    -moz-transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes breath-animation{
+  0% {
+    height: 52px;
+  }
+  50% {
+    height: 633px;
+  }
+  100% {
+    height: 52px;
+  }
+}
+
+#mountain{
+  background-image: url("assets/mountain.png");
+  background-size: cover;
+}
+
+.none{
+  visibility: hidden;
+}

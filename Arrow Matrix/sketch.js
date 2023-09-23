@@ -65,18 +65,4 @@ var mainSketch = function(p){
   }
 } 
 
-var drawSketch = function(p){
-  p.setup = function(){
-    p.pixelDensity(1);
-    p.createCanvas(200,200);
-    arrow = new Arrow(100,30,p.color('black'));
-  }
-  p.draw = function(){
-    p.clear();
-    p.translate(p.width/2,p.height/2);
-    arrow.display(p);
-  }
-}
-
 let mainCanvas = new p5(mainSketch,'mainCanvas');
-// let drawCanvas = new p5(drawSketch,'drawCanvas');

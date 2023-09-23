@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sketch</title>
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="swiper.css">
+
+    <script src="p5.js"></script>
+    <script src="swiper.js"></script>
+    <script src="interact.min.js"></script>
+  </head>
+
+  <body>
+    <div class = "container">
+      <div class = "UI top">
+        <h2></h2>
+        <div id = "menu">
+          <svg class = "icon" width="27" height="16" viewBox="0 0 27 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line y1="1" x2="27" y2="1" stroke="black" stroke-width="2"/>
+            <line y1="8" x2="27" y2="8" stroke="black" stroke-width="2"/>
+            <line y1="15" x2="27" y2="15" stroke="black" stroke-width="2"/>
+          </svg>            
+        </div>
+      </div>
+      <div class = "swiper-container" id = "visuals">
+        <div class="swiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide" id = "arrow-curtain"></div>
+            <div class="swiper-slide" id = "arrow-matrix"></div>
+            <div class="swiper-slide" id = "dot-matrix"></div>
+            <div class="swiper-slide" id = "strokes"></div>
+          </div>
+        </div>
+      </div>
+      <div id = "CTA">
+        <svg class = "icon" width="52" height="54" viewBox="0 0 52 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M49.718 28.0979L25.7628 4.14269M25.7628 4.14269L1.8076 28.0979M25.7628 4.14269V53.1903" stroke="black" stroke-width="5"/>
+        </svg>    
+      </div>
+      <div id = "breath">
+        <div class = "banner-container">
+          <h2 class = "banner"></h2>
+        </div>
+      </div>
+      <div class = "bottom-sheet-container">
+        <div class = "UI bottom-sheet">
+          <div id = "handle">
+            <svg id = "arrow" class = "icon" width="20" height="12" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19.0708 11.0354L10.0354 1.99998L0.999955 11.0354" stroke="black" stroke-width="2"/>
+            </svg>    
+          </div>      
+          <div class = "swiper-container" id = "carousel">
+            <div class="swiper">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                  <img src="assets/arrow curtain.png" style = "opacity:100%">
+                </div>
+                <div class="swiper-slide">
+                  <img src="assets/arrow matrix.png">
+                </div>  
+                <div class="swiper-slide">
+                  <img src="assets/dot matrix.png">
+                </div>
+                <div class="swiper-slide">
+                  <img src="assets/strokes.png">
+                </div>
+                <div class="swiper-slide">
+                  <img src="assets/coming soon.png">
+                </div>
+                <div class="swiper-slide">
+                  <img src="assets/coming soon.png">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class = "UI bottom">
+        <a class = "tab" id = "relief">
+          <h2 class = "u-bold">Relief</h2>
+        </a>
+        <a class = "tab" id = "prevent" href="prevent.html">
+          <h2>Prevent</h2>
+        </a>
+      </div>
+    </div>
+    <script src="permissions.js"></script>
+    <script src="util.js"></script>
+    <script src="arrow curtain.js"></script>
+    <script src="arrow matrix.js"></script>
+    <script src="dot matrix.js"></script>
+    <script src="strokes.js"></script>
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
