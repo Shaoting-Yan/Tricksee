@@ -120,4 +120,6 @@ const arrowCurtainWrapper = function(){
   return {show:show,remove:remove};
 }
 
+arrowCurtainWrapper().show();
+console.log("here");
 

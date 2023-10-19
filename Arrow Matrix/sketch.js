@@ -45,7 +45,6 @@ var mainSketch = function(p){
     p.Rz = rotation[0];
     p.Ry = rotation[2];
     p.Rx = rotation[1];  
-    p.clear();
     moveObject(p);
     for(let i = 0;i < p.matrixSize; i++){
       for(let j = 0;j < p.matrixSize; j++){
